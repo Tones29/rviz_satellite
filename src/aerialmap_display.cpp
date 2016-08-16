@@ -287,7 +287,9 @@ void
 AerialMapDisplay::navFixCallback(const sensor_msgs::NavSatFixConstPtr &msg) {
   // If the new (lat,lon) falls into a different tile then we have some
   // reloading to do.
-  if (!received_msg_ ||
+
+  // REMARK AW: `true ||` was added in order to always recenter map for each new gps position.
+  if (true || !received_msg_ ||
       (loader_ && !loader_->insideCentreTile(msg->latitude, msg->longitude) &&
        dynamic_reload_property_->getValue().toBool())) {
     ref_fix_ = *msg;
